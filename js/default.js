@@ -1,6 +1,6 @@
 var current = getCookie('idTutor');
 
-if (typeof current !== "number") {
+if (current === null || current === "") {
     if (window.location.pathname !== "/web-inter/html/home.html") {
         window.location.href = "home.html";
     }

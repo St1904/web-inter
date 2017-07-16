@@ -1,11 +1,10 @@
 $(document).ready(function () {
-    var cookie = getCookie("idTutor");
-    if (cookie) {
-        $("#auth-reg").attr("hidden", true);
-    }
+    if (!hasCookie())
+        $("#auth-reg").removeAttr("hidden");
     $("#button-enter").on("click", function (e) {
         e.preventDefault();
         setCookie('idTutor', $('#id_tutor').val(), {path: '/'});
-        window.location.href = "home.html";
+        window.location.href = "main.html";
+        // show(home);
     })
 });

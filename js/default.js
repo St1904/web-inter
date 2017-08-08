@@ -33,6 +33,7 @@ $(document).ready(function () {
                     break;
                 case "menu-students":
                     show(students);
+                    show_students();
                     break;
                 case "menu-sayhi":
                     show(tutor);

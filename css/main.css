@@ -49,6 +49,10 @@ div, .panel {
     border-radius: 10px;
 }
 
+#board {
+    background-color: #ffffff;
+}
+
 /*
 
 .div-main-body {

@@ -27,6 +27,7 @@ $(document).ready(function () {
                     break;
                 case "menu-subjects":
                     show(subjects);
+                    show_subjects("");
                     break;
                 case "menu-journal":
                     show(journal);

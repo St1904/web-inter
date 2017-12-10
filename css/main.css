@@ -62,6 +62,7 @@ div, .panel {
 td {
     border: 1px solid gray;
     -webkit-user-select: none;
+    height: 12px
 }
 
 th {

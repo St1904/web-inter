@@ -24,6 +24,7 @@ $(document).ready(function () {
                     break;
                 case "menu-schedule":
                     show(schedule);
+                    show_schedule();
                     break;
                 case "menu-subjects":
                     show(subjects);

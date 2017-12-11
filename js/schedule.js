@@ -9,17 +9,35 @@ function show_details() {
 }
 
 function draw_events() {
+    var query = 'localhost:8080/rest/eventchange/?from=2017-06-05&to=2017-06-11';
+
+/*    $.ajax({
+        type: "GET",
+        datatype: "json",
+        url: query,
+        headers: {
+            'idTutor': getCookie("idTutor")
+        }
+    }).then(function (data) {
+        $.each(data, function () {
+
+        });
+    });*/
+
+
     var tr = $('tr:eq(5)');
     var td = $('td:eq(6)');
+    // var tr = $('tr').eq(5);
+    // var td = $('td').eq(6);
 
-/*
-    tr.css({
-        'background-color': 'green'
-    });
-    td.css({
-        'background-color': 'blue'
-    });
-*/
+    /*
+        tr.css({
+            'background-color': 'green'
+        });
+        td.css({
+            'background-color': 'blue'
+        });
+    */
 
     var div = $('<div id="event1"></div>').css({
         'position': 'absolute',
@@ -33,6 +51,29 @@ function draw_events() {
 
     $("#schedule-table").append(div);
     $('#event1').draggable({
+        axis: 'y',
+        containment: 'parent',
+        distance: 10,
+        snap: 'td'
+    });
+}
+
+function draw_event(trNum, tdNum, num) {
+    var tr = $('tr').eq(trNum);
+    var td = $('td').eq(tdNum);
+
+    var div = $('<div id="event"' + num + '></div>').css({
+        'position': 'absolute',
+        'background-color': 'red',
+        'top': tr.prop('offsetTop') + tr.closest('table').prop('offsetTop'),
+        'left': td.prop('offsetLeft') + td.closest('table').prop('offsetLeft'),
+        'width': td.prop('offsetWidth'),
+        'height': td.prop('offsetHeight') * 5,
+        'border': '2px solid black'
+    });
+
+    $("#schedule-table").append(div);
+    $('#event' + num).draggable({
         axis: 'y',
         containment: 'parent',
         distance: 10,

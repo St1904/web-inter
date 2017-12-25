@@ -48,6 +48,12 @@ function getCol(date) {
     return result;
 }
 
+//Получение даты из номера колонки
+function getCurrentDate(col) {
+    var date = new Date(monday.getTime() + (col - 1) * 24 * 60 * 60 * 1000);
+    return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+}
+
 //Получение номера строки по времени в формате "18:59:00"
 function getRow(s) {
     return (+s.substr(0, 2) + +s.substr(3, 2) / 60) * 2 + 1;
@@ -87,39 +93,6 @@ function draw_events() {
             ev.append(elem.name);
         });
     });
-
-
-    /*    var tr = $('tr:eq(5)');
-        var td = $('td:eq(6)');
-        // var tr = $('tr').eq(5);
-        // var td = $('td').eq(6);
-
-            tr.css({
-                'background-color': 'green'
-            });
-            td.css({
-                'background-color': 'blue'
-            });*/
-
-    /*    var div = $('<div id="event1"></div>').css({
-            'position': 'absolute',
-            'background-color': 'red',
-            'top': tr.prop('offsetTop') + tr.closest('table').prop('offsetTop'),
-            'left': td.prop('offsetLeft') + td.closest('table').prop('offsetLeft'),
-            'width': td.prop('offsetWidth'),
-            'height': td.prop('offsetHeight') * 5,
-            'border': '2px solid black'
-        });
-
-        $("#schedule-table").append(div);
-        $('#event1').draggable({
-            axis: 'y',
-            containment: 'parent',
-            distance: 10,
-            snap: 'td'
-        });*/
-
-    // draw_event(5, 6, 1);
 }
 
 //TODO Переписать с передачей объекта из JSON ?? - с учетом разных таблиц
@@ -177,6 +150,14 @@ function show_detail_event() {
         dialog.find('#timeEnd').val(event.timeEnd);
         dialog.find('#description').text(event.comment);
 
+        dialog.find('#for-serial-group').addClass('no-display');
+        dialog.find('#repeat').removeClass('no-display');
+
+        dialog.find('#repeat_code_group').addClass('no-display');
+        dialog.find('#status_group').removeClass('no-display');
+
+        dialog.find('#serial-group').removeClass('no-display');
+
         var status;
         switch (event.repeatCode) {
             case 'NEVER':
@@ -184,23 +165,27 @@ function show_detail_event() {
                 break;
             case 'DAILY':
                 status = 'Каждый день';
+                dialog.find('#repeat').removeClass('no-display');
                 break;
             case 'WEEKLY':
                 status = 'Каждую неделю';
+                dialog.find('#repeat').removeClass('no-display');
                 break;
             case 'MONTHLY':
                 status = 'Каждый месяц';
+                dialog.find('#repeat').removeClass('no-display');
                 break;
             case 'YEARLY':
                 status = 'Каждый год';
+                dialog.find('#repeat').removeClass('no-display');
                 break;
         }
         dialog.find('#status').text(status);
 
         dialog.find('#dateStart').val(event.dateStart);
         if (event.dateEnd === null) {
-            dialog.find('#date_end').toggleClass('no-display');
-            dialog.find('#none_date_end').toggleClass('no-display');
+            dialog.find('#date_end').addClass('no-display');
+            dialog.find('#none_date_end').removeClass('no-display');
         } else {
             dialog.find('#dateEnd').val(event.dateEnd);
         }
@@ -216,58 +201,86 @@ function clear_td_color() {
     });
 }
 
+//Закрашивание td по щелчку и перемещению мыши + создание нового события
 function painting() {
-    var x1, y1, x, y, td1, td2, col, row, n;
-    $('td').not('.first-col-td').on('mousedown', function(event1) {
+    var td1;
+    $('td').not('.first-col-td').on('mousedown', function() {
         td1 = $(this);
-        $(document).on('mousemove', function(event2) {
+        $(document).on('mousemove', function(event) {
             clear_td_color();
-            // console.log(event2.pageX + " " + event2.pageY);
-            x1 = event1.pageX;
-            y1 = event1.pageY;
-            x = event2.pageX - event1.pageX; //no
-            y = event2.pageY - event1.pageY; //no
-            //тоже пропуски
-            // document.elementFromPoint(event2.pageX, event2.pageY).classList.add('colored');
-
-            paint_by_coord(td1, event2.pageX, event2.pageY);
-
-            // console.log(x + " " + y);
+            paint_by_coord(td1, event.pageX, event.pageY);
         }).on('mouseup', function() {
-            // alert(td.index());
-            // alert(td.closest('tr').index());
-
-
-            /*var div = $('<div></div>')
-                .css({
-                    'position': 'absolute',
-                    'background-color': 'blue',
-                    'top': y1,
-                    'left': x1,
-                    'width': x,
-                    'height': y,
-                    'border': '1px solid black'
-                });
-
-            $("body").append(div);*/
-
-            //Оно нужно?
             $(document).off('mousemove');
         })
     }).on('mouseup', function () {
         $(document).off('mousemove');
-        td2 = $(this);
+        var td2 = $(this);
 
-        row = td1.closest('tr').index();
-        col = td1.index() + ((row + 1) % 2);
+        var row = td1.closest('tr').index();
+        var col = td1.index() + ((row + 1) % 2);
         var row2 = td2.closest('tr').index();
-        n = row2 - row + 1;
+        var n = row2 - row + 1;
+        var currentDate = getCurrentDate(col);
 
-        draw_event(col, row, 0, n, "0000");
+        //Рисуем div нового события с id = 0 + стираем выделение цветом
+        draw_event(col, row, 0, n, currentDate);
+        clear_td_color();
+
+        //Заполнение модального окна данными
+        var dialog = $('#event_detail');
+        dialog.find('#name').val("");
+        dialog.find('#description').val("");
+
+        dialog.find('#currentDate').text(currentDate);
+
+        dialog.find('#timeStart').val(rowToTimeTop(row));
+        dialog.find('#timeEnd').val(rowToTimeBot(row2));
+
+        dialog.find('#for-serial-group').removeClass('no-display');
+        dialog.find('#repeat').addClass('no-display');
+
+        dialog.find('#dateStart').val(currentDate);
+        dialog.find('#date_end').removeClass('no-display');
+        dialog.find('#none_date_end').addClass('no-display');
+
+        dialog.find('#repeat_code_group').removeClass('no-display');
+        dialog.find('#status_group').addClass('no-display');
+
+        dialog.find('#serial-group').addClass('no-display');
+
+        dialog.modal('show');
+
+        //Добавляем/убираем описание серии событий при клике по checkbox
+        $('#with-serial').on('change', function() {
+            if ($(this).prop('checked')) {
+                $('#repeat').fadeIn().show();
+            } else {
+                $('#repeat').fadeOut(300);
+            }
+        });
+
+        //Добавляем функцию создания события по кнопке "Сохранить"
+        $('#save_btn').on('click', function() {
+            var date_start = dialog.find('#dateStart').val();
+            var new_event = {
+                name: dialog.find('#name').val(),
+                repeatCode: dialog.find('#with-serial').prop('checked') ? dialog.find('#repeat_code').val() : 'NEVER',
+                dateStart: date_start,
+                dateEnd: dialog.find('#with-serial').prop('checked') ? dialog.find('#dateEnd').val() : date_start,
+                timeStart: dialog.find('#timeStart').val(),
+                timeEnd: dialog.find('#timeEnd').val(),
+                comment: dialog.find('#description').val()
+            };
+            saveEvent(JSON.stringify(new_event));
+
+            //Закрываем модальное окно
+            dialog.modal('hide');
+        });
     });
 }
 
-function paint_by_coord(td1, x2, y2) {
+//Функция, закрашивающая все td, начиная с td1 вниз до td с координатами x и y
+function paint_by_coord(td1, x, y) {
     var row = td1.closest('tr').index();
     var col = td1.index() + ((row + 1) % 2);
     $('tr').each(function() {
@@ -276,12 +289,53 @@ function paint_by_coord(td1, x2, y2) {
             var td = $(this);
             if (td.index() + ((tr.index() + 1) % 2) === col
                     && tr.index() >= row
-                    && tr.index() <= $(document.elementFromPoint(x2, y2)).closest('tr').index()) {
+                    && tr.index() <= $(document.elementFromPoint(x, y)).closest('tr').index()) {
                 $(this).addClass('colored');
             }
         })
     })
 }
 
+//Функция, преобразующая номер ряда в время формата 18:59 (по верхней границе div
+function rowToTimeTop(row) {
+    var hour = Math.floor((row - 1) / 2);
+    var minute = ((row + 1) / 2 % 1) * 60;
+    return (hour === 0 ? "00" : hour < 10 ? "0" + hour : hour) + ":" + (minute === 0 ? "00" : minute) + ":00";
+}
 
+//Функция, преобразующая номер ряда в время формата 18:59 (по нижней границе div)
+function rowToTimeBot(row) {
+    var hour = Math.floor(row / 2);
+    var minute = (row / 2 % 1) * 60;
+    return (hour === 0 ? "00" : hour < 10 ? "0" + hour : hour) + ":" + (minute === 0 ? "00" : minute) + ":00";
+}
 
+//Функция создания события на сервере
+function saveEvent(event) {
+    $.ajax({
+        type: "POST",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        processData: false,
+        url: "http://localhost:8080/rest/event",
+        headers: {
+            'idTutor': getCookie("idTutor")
+        },
+        data: event
+    }).then(function (data) {
+        //Перерисовываем все события календаря
+        $('div').remove('.event');
+        draw_events();
+    })
+    //TODO подумать, что сделать после POST запроса
+}
+
+//Функция обновления события на сервере
+function updateEvent() {
+
+}
+
+//Функция обновления серии событий на сервере
+function updateSerialEvent() {
+
+}

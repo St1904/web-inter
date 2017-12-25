@@ -484,15 +484,15 @@
                         <!--TODO action?-->
                         <form action="" class="form-horizontal">
                             <div class="form-group">
-                                <label for="name" class="col-lg-3 control-label">Название события</label>
+                                <label for="name" class="col-lg-3 control-label">Название</label>
                                 <div class="col-lg-9">
                                     <input id="name" type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="currentDate" class="col-lg-3 control-label">Дата текущего события</label>
+                                <label for="currentDate" class="col-lg-3 control-label">Дата</label>
                                 <div class="col-lg-3">
-                                    <p id="currentDate" class="form-control-static">Добавить сюда дату</p>
+                                    <p id="currentDate" class="form-control-static"></p>
                                     <!--<input id="currentDate" type="text" class="form-control" disabled>-->
                                 </div>
                             </div>
@@ -509,16 +509,37 @@
                             <div class="form-group">
                                 <label for="description" class="col-lg-3 control-label">Комментарий</label>
                                 <div class="col-lg-9">
-                                    <textarea id="description" class="form-control"></textarea>
+                                    <textarea id="description" class="form-control"
+                                              placeholder="Описание события"></textarea>
                                 </div>
                             </div>
-                            <div id="repeat">
+                            <div id="for-serial-group" class="form-group no-display">
+                                <div class="col-lg-offset-3 col-lg-3 checkbox">
+                                    <label>
+                                        <input id="with-serial" type="checkbox"> Повторяющееся событие
+                                    </label>
+                                </div>
+                            </div>
+                            <div id="repeat" class="no-display">
                                 <hr noshade>
                                 <h3 class="no-margin-top">Повторение события</h3>
-                                <div class="form-group">
-                                    <label for="status" class="col-lg-3 control-label">Повторение</label>
+                                <!--Выбор между двумя вариантами-->
+                                <div id="status_group" class="form-group">
+                                    <label for="status" class="col-lg-3 control-label">Повторять</label>
                                     <div class="col-lg-3">
-                                        <h3 class="no-margin-top"><span id="status" class="label label-primary">Статус</span></h3>
+                                        <h3 class="no-margin-top"><span id="status"
+                                                                        class="label label-primary">Статус</span></h3>
+                                    </div>
+                                </div>
+                                <div id="repeat_code_group" class="form-group no-display">
+                                    <label for="repeat_code" class="col-lg-3 control-label">Повторять</label>
+                                    <div class="col-lg-3">
+                                        <select id="repeat_code" class="form-control">
+                                            <option value="DAILY" selected>Каждый день</option>
+                                            <option value="WEEKLY">Каждую неделю</option>
+                                            <option value="MONTHLY">Каждый месяц</option>
+                                            <option value="YEARLY">Каждый год</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div id="repeat_dates">
@@ -527,16 +548,17 @@
                                         <div class="col-lg-3">
                                             <input id="dateStart" type="date" class="form-control">
                                         </div>
-                                        <label for="dateEnd" class="col-lg-3 control-label">Окончание серии</label>
                                         <!--Выбор между двумя вариантами-->
+                                        <label for="dateEnd" class="col-lg-3 control-label">Окончание серии</label>
                                         <div id="date_end" class="col-lg-3">
                                             <input id="dateEnd" type="date" class="form-control">
                                         </div>
                                         <div id="none_date_end" class="col-lg-3 no-display">
-                                            <h3 class="no-margin-top"><span class="label label-info">Бесконечно</span></h3>
+                                            <h3 class="no-margin-top"><span class="label label-info">Бесконечно</span>
+                                            </h3>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div id="serial-group" class="form-group">
                                         <div class="col-lg-offset-3 col-lg-3 checkbox">
                                             <label>
                                                 <input id="serial" type="checkbox"> Изменения для серии
@@ -549,8 +571,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger">Удалить событие</button>
-                    <button type="button" class="btn btn-primary">Сохранить изменения</button>
+                    <button type="button" class="btn btn-danger">Удалить</button>
+                    <button id="save_btn" type="button" class="btn btn-primary">Сохранить</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть (без сохранения)</button>
                 </div>
             </div>

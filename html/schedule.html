@@ -1,16 +1,17 @@
 <template>
-    <h2>Собственно, расписание</h2>
+    <button id="prev" class="btn btn-primary pull-left"><i class="glyphicon glyphicon-chevron-left" aria-hidden="true"></i>   Предыдущая неделя</button>
+    <button id="next" class="btn btn-primary pull-right">Следующая неделя   <i class="glyphicon glyphicon-chevron-right" aria-hidden="true"></i></button>
     <div id="schedule-table">
         <table>
             <tr>
                 <th class="first-col-td"></th>
-                <th class="first-row-th">Понедельник</th>
-                <th class="first-row-th">Вторник</th>
-                <th class="first-row-th">Среда</th>
-                <th class="first-row-th">Четверг</th>
-                <th class="first-row-th">Пятница</th>
-                <th class="first-row-th">Суббота</th>
-                <th class="first-row-th">Воскресенье</th>
+                <th class="first-row-th">Понедельник<div class="event-date"></div></th>
+                <th class="first-row-th">Вторник<div class="event-date"></div></th>
+                <th class="first-row-th">Среда<div class="event-date"></div></th>
+                <th class="first-row-th">Четверг<div class="event-date"></div></th>
+                <th class="first-row-th">Пятница<div class="event-date"></div></th>
+                <th class="first-row-th">Суббота<div class="event-date"></div></th>
+                <th class="first-row-th">Воскресенье<div class="event-date"></div></th>
             </tr>
             <tr>
                 <td class="first-col-td" rowspan="2">00:00</td>
@@ -476,7 +477,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <button type="button" class="close close_btn" data-dismiss="modal" aria-hidden="true">×</button>
                     <h3 class="modal-title">Информация о событии</h3>
                 </div>
                 <div class="modal-body">
@@ -571,9 +572,9 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger">Удалить</button>
+                    <button id="delete_btn" type="button" class="btn btn-danger">Удалить</button>
                     <button id="save_btn" type="button" class="btn btn-primary">Сохранить</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть (без сохранения)</button>
+                    <button type="button" class="btn btn-default close_btn">Закрыть (без сохранения)</button>
                 </div>
             </div>
         </div>

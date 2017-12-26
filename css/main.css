@@ -59,14 +59,13 @@ div, .panel {
 }
 
 /* Для вкладки Event*/
-td {
-    border: 1px solid gray;
+td, th {
+    border: 1px solid #ddd;
     -webkit-user-select: none;
-    height: 13px
 }
 
-th {
-    -webkit-user-select: none;
+td {
+    height: 13px
 }
 
 table {

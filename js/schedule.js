@@ -6,11 +6,27 @@ var sunday = new Date(today.getTime() + (7 - day) * 24 * 60 * 60 * 1000);
 function show_schedule() {
     // draw_table(7);
 
-    draw_details();
+    draw_dates();
 
     draw_events();
 
     painting();
+
+    //Обработчики для кнопок "Следующая неделя" и "Предыдущая неделя"
+    $('#prev').on('click', function() {
+        monday = new Date(monday.getTime() - 7 * 24 * 60 * 60 * 1000);
+        sunday = new Date(sunday.getTime() - 7 * 24 * 60 * 60 * 1000);
+        $('div').remove('.event');
+        draw_dates();
+        draw_events();
+    });
+    $('#next').on('click', function() {
+        monday = new Date(monday.getTime() + 7 * 24 * 60 * 60 * 1000);
+        sunday = new Date(sunday.getTime() + 7 * 24 * 60 * 60 * 1000);
+        $('div').remove('.event');
+        draw_dates();
+        draw_events();
+    })
 }
 
 function draw_table(n) {
@@ -21,11 +37,11 @@ function draw_week_table() {
 
 }
 
-function draw_details() {
+function draw_dates() {
     var dayIndex = new Date(monday.getTime());
 
-    $('.first-row-th').each(function () {
-            this.innerHTML += ', ' + dayIndex.getDate() + '.' + (dayIndex.getMonth() + 1);
+    $('.event-date').each(function () {
+            this.innerHTML = dayIndex.getDate() + '.' + (dayIndex.getMonth() + 1);
             dayIndex = new Date(dayIndex.getTime() + 24 * 60 * 60 * 1000);
         }
     )
@@ -191,6 +207,11 @@ function show_detail_event() {
         }
 
         dialog.modal('show');
+
+        //Закрываем модальное окно по кнопке "Закрыть"
+        $('.close_btn').on('click', function() {
+            dialog.modal('hide');
+        })
     });
 }
 
@@ -222,8 +243,8 @@ function painting() {
         var n = row2 - row + 1;
         var currentDate = getCurrentDate(col);
 
-        //Рисуем div нового события с id = 0 + стираем выделение цветом
-        draw_event(col, row, 0, n, currentDate);
+        //Рисуем div нового события с id = _new + стираем выделение цветом
+        draw_event(col, row, "_new", n, currentDate);
         clear_td_color();
 
         //Заполнение модального окна данными
@@ -250,7 +271,7 @@ function painting() {
 
         dialog.modal('show');
 
-        //Добавляем/убираем описание серии событий при клике по checkbox
+        //Добавляем/убираем описание серии событий при клике по checkbox "Повторяющееся событие"
         $('#with-serial').on('change', function() {
             if ($(this).prop('checked')) {
                 $('#repeat').fadeIn().show();
@@ -276,6 +297,12 @@ function painting() {
             //Закрываем модальное окно
             dialog.modal('hide');
         });
+
+        //Закрываем модальное окно и стираем событие по кнопке "Закрыть" или "Удалить"
+        $('#delete_btn, .close_btn').on('click', function() {
+            dialog.modal('hide');
+            $('#event_new').remove();
+        })
     });
 }
 

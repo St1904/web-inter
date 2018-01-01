@@ -1,3 +1,582 @@
 <template>
-    <h2>Собственно, расписание</h2>
+    <button id="prev" class="btn btn-primary pull-left"><i class="glyphicon glyphicon-chevron-left" aria-hidden="true"></i>   Предыдущая неделя</button>
+    <button id="next" class="btn btn-primary pull-right">Следующая неделя   <i class="glyphicon glyphicon-chevron-right" aria-hidden="true"></i></button>
+    <div id="schedule-table">
+        <table>
+            <tr>
+                <th class="first-col-td"></th>
+                <th class="first-row-th">Понедельник<div class="event-date"></div></th>
+                <th class="first-row-th">Вторник<div class="event-date"></div></th>
+                <th class="first-row-th">Среда<div class="event-date"></div></th>
+                <th class="first-row-th">Четверг<div class="event-date"></div></th>
+                <th class="first-row-th">Пятница<div class="event-date"></div></th>
+                <th class="first-row-th">Суббота<div class="event-date"></div></th>
+                <th class="first-row-th">Воскресенье<div class="event-date"></div></th>
+            </tr>
+            <tr>
+                <td class="first-col-td" rowspan="2">00:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="first-col-td" rowspan="2">01:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="first-col-td" rowspan="2">02:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="first-col-td" rowspan="2">03:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="first-col-td" rowspan="2">04:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="first-col-td" rowspan="2">05:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="first-col-td" rowspan="2">06:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="first-col-td" rowspan="2">07:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="first-col-td" rowspan="2">08:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="first-col-td" rowspan="2">09:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="first-col-td" rowspan="2">10:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="first-col-td" rowspan="2">11:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="first-col-td" rowspan="2">12:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="first-col-td" rowspan="2">13:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="first-col-td" rowspan="2">14:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="first-col-td" rowspan="2">15:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="first-col-td" rowspan="2">16:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="first-col-td" rowspan="2">17:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="first-col-td" rowspan="2">18:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="first-col-td" rowspan="2">19:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="first-col-td" rowspan="2">20:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="first-col-td" rowspan="2">21:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="first-col-td" rowspan="2">22:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="first-col-td" rowspan="2">23:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+
+    <!--Модальное окно с детальной информацией о событии-->
+    <div id="event_detail" class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close close_btn" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 class="modal-title">Информация о событии</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <!--TODO action?-->
+                        <form action="" class="form-horizontal">
+                            <div class="form-group">
+                                <label for="name" class="col-lg-3 control-label">Название</label>
+                                <div class="col-lg-9">
+                                    <input id="name" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="currentDate" class="col-lg-3 control-label">Дата</label>
+                                <div class="col-lg-3">
+                                    <p id="currentDate" class="form-control-static"></p>
+                                    <!--<input id="currentDate" type="text" class="form-control" disabled>-->
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="timeStart" class="col-lg-3 control-label">Время начала</label>
+                                <div class="col-lg-3">
+                                    <input id="timeStart" type="time" step="900" class="form-control">
+                                </div>
+                                <label for="timeEnd" class="col-lg-3 control-label">Время окончания</label>
+                                <div class="col-lg-3">
+                                    <input id="timeEnd" type="time" step="900" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="description" class="col-lg-3 control-label">Комментарий</label>
+                                <div class="col-lg-9">
+                                    <textarea id="description" class="form-control"
+                                              placeholder="Описание события"></textarea>
+                                </div>
+                            </div>
+                            <div id="for-serial-group" class="form-group no-display">
+                                <div class="col-lg-offset-3 col-lg-3 checkbox">
+                                    <label>
+                                        <input id="with-serial" type="checkbox"> Повторяющееся событие
+                                    </label>
+                                </div>
+                            </div>
+                            <div id="repeat" class="no-display">
+                                <hr noshade>
+                                <h3 class="no-margin-top">Повторение события</h3>
+                                <!--Выбор между двумя вариантами-->
+                                <div id="status_group" class="form-group">
+                                    <label for="status" class="col-lg-3 control-label">Повторять</label>
+                                    <div class="col-lg-3">
+                                        <h3 class="no-margin-top"><span id="status"
+                                                                        class="label label-primary">Статус</span></h3>
+                                    </div>
+                                </div>
+                                <div id="repeat_code_group" class="form-group no-display">
+                                    <label for="repeat_code" class="col-lg-3 control-label">Повторять</label>
+                                    <div class="col-lg-3">
+                                        <select id="repeat_code" class="form-control">
+                                            <option value="DAILY" selected>Каждый день</option>
+                                            <option value="WEEKLY">Каждую неделю</option>
+                                            <option value="MONTHLY">Каждый месяц</option>
+                                            <option value="YEARLY">Каждый год</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="repeat_dates">
+                                    <div class="form-group">
+                                        <label for="dateStart" class="col-lg-3 control-label">Старт серии</label>
+                                        <div class="col-lg-3">
+                                            <input id="dateStart" type="date" class="form-control">
+                                        </div>
+                                        <!--Выбор между двумя вариантами-->
+                                        <label for="dateEnd" class="col-lg-3 control-label">Окончание серии</label>
+                                        <div id="date_end" class="col-lg-3">
+                                            <input id="dateEnd" type="date" class="form-control">
+                                        </div>
+                                        <div id="none_date_end" class="col-lg-3 no-display">
+                                            <h3 class="no-margin-top"><span class="label label-info">Бесконечно</span>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div id="serial-group" class="form-group">
+                                        <div class="col-lg-offset-3 col-lg-3 checkbox">
+                                            <label>
+                                                <input id="serial" type="checkbox"> Изменения для серии
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="delete_btn" type="button" class="btn btn-danger">Удалить</button>
+                    <button id="save_btn" type="button" class="btn btn-primary">Сохранить</button>
+                    <button type="button" class="btn btn-default close_btn">Закрыть (без сохранения)</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>

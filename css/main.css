@@ -58,6 +58,53 @@ div, .panel {
     cursor: pointer;
 }
 
+/* Для вкладки Event*/
+td, th {
+    border: 1px solid #ddd;
+    -webkit-user-select: none;
+}
+
+td {
+    height: 13px
+}
+
+table {
+    width: 100%;
+}
+
+.first-row-th {
+    text-align: center;
+    width: 14%;
+}
+
+.first-col-td {
+    width: auto;
+    text-align: right;
+}
+
+/* Для покраски ячеек таблицы*/
+.colored {
+    background-color: rgba(103,222,231,0.39);
+}
+
+
+/*Для всплывающего окна дополнительной информации о событии*/
+.form-group .control-label {
+    text-align: left;
+}
+/*Горизонтальная линия*/
+hr {
+    height: 1px;
+    background-color: rgb(229, 229, 229);
+}
+/*Убираем отступ сверху над статусом*/
+.no-margin-top {
+    margin-top: 0;
+}
+
+.no-display {
+    display: none;
+}
 
 /*
 

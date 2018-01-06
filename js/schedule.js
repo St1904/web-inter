@@ -257,8 +257,18 @@ function painting() {
         dialog.find('#timeStart').val(rowToTimeTop(row));
         dialog.find('#timeEnd').val(rowToTimeBot(row2));
 
+        //Скрываем блок repeat (по умолчанию событие не повторяющееся)
         dialog.find('#for-serial-group').removeClass('no-display');
+        dialog.find('#with-serial').prop('checked', false);
         dialog.find('#repeat').addClass('no-display');
+        dialog.find('#repeat').removeAttr('style');
+
+        //Скрываем блок lesson (по умолчанию событие не является занятием)
+        dialog.find('#for-lesson-group').removeClass('no-display');
+        dialog.find('#with-lesson').prop('checked', false);
+        dialog.find('#with-lesson').removeAttr('disabled');
+        dialog.find('#lesson').addClass('no-display');
+        dialog.find('#lesson').removeAttr('style');
 
         dialog.find('#dateStart').val(currentDate);
         dialog.find('#date_end').removeClass('no-display');
@@ -277,6 +287,15 @@ function painting() {
                 $('#repeat').fadeIn().show();
             } else {
                 $('#repeat').fadeOut(300);
+            }
+        });
+
+        //Добавляем описание занятия при клике по checkbox "Занятие"
+        $('#with-lesson').on('change', function() {
+            if ($(this).prop('checked')) {
+                $('#lesson').fadeIn().show();
+            } else {
+                $('#lesson').fadeOut(300);
             }
         });
 

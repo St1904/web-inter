@@ -168,6 +168,56 @@ function show_detail_event() {
 
         dialog.find('#for-serial-group').addClass('no-display');
         dialog.find('#repeat').removeClass('no-display');
+        dialog.find('#repeat').removeAttr('style');
+
+        dialog.find('#lesson').removeAttr('style');
+        dialog.find('#for-lesson-group').removeClass('no-display');
+        if (event.lesson === null) {
+            dialog.find('#with-lesson')
+                .prop('checked', false)
+                .removeAttr('disabled');
+            dialog.find('#lesson')
+                .addClass('no-display');
+            //TODO select! Тоже нужны, если хотим сделать событие занятием
+
+            dialog.find('#add-to-journal-div').addClass('no-display');
+            dialog.find('#checkbox-to-journal-div').removeClass('no-display');
+        } else {
+            dialog.find('#with-lesson')
+                .prop('checked', true)
+                .prop('disabled', true);
+            dialog.find('#lesson')
+                .removeAttr('style')
+                .removeClass('no-display');
+            dialog.find('#subject-div').removeClass('no-display');
+            dialog.find('#subject-select-div').addClass('no-display');
+            dialog.find('#subject').text(event.lesson.subjectName);
+            dialog.find('#student-div').removeClass('no-display');
+            dialog.find('#student-select-div').addClass('no-display');
+            dialog.find('#student').text(event.lesson.student.firstName + " " + event.lesson.student.lastName);
+            dialog.find('#price').val(event.lesson.price);
+
+            dialog.find('#add-to-journal-div').removeClass('no-display');
+            dialog.find('#checkbox-to-journal-div').addClass('no-display');
+
+            idLesson = event.lesson.id;
+            date = _this.data('currentDate');
+            check_journal_exists(idLesson, date);
+
+            $('#add_to_journal_btn').off('click').on('click', function() {
+                //TODO
+                $(this).prop('disabled', true);
+            });
+        }
+
+        //Добавляем описание занятия при клике по checkbox "Занятие"
+        $('#with-lesson').on('change', function() {
+            if ($(this).prop('checked')) {
+                $('#lesson').fadeIn().show();
+            } else {
+                $('#lesson').fadeOut(300);
+            }
+        });
 
         dialog.find('#repeat_code_group').addClass('no-display');
         dialog.find('#status_group').removeClass('no-display');
@@ -212,6 +262,25 @@ function show_detail_event() {
         $('.close_btn').on('click', function() {
             dialog.modal('hide');
         })
+    });
+}
+
+
+//Функция проверки, что запись в журнале уже есть
+function check_journal_exists(idLesson, date) {
+    $.ajax({
+        type: "GET",
+        datatype: "json",
+        url: "http://localhost:8080/rest/journal?idLesson=" + idLesson + "&date=" + date,
+        headers: {
+            'idTutor': getCookie("idTutor")
+        }
+    }).then(function (journal, statusText, xhr) {
+        if (journal !== null) {
+            $('#add_to_journal_btn').removeAttr('disabled');
+        } else if (xhr.status === 204) {
+            $('#add_to_journal_btn').prop('disabled', true);
+        }
     });
 }
 
@@ -279,6 +348,18 @@ function painting() {
 
         dialog.find('#serial-group').addClass('no-display');
 
+        dialog.find('#subject-div').addClass('no-display');
+        dialog.find('#subject-select-div').removeClass('no-display');
+        dialog.find('#subject').text("");
+        //TODO select x2 штука
+        dialog.find('#student-div').addClass('no-display');
+        dialog.find('#student-select-div').removeClass('no-display');
+        dialog.find('#student').text("");
+        dialog.find('#price').val("");
+
+        dialog.find('#add-to-journal-div').addClass('no-display');
+        dialog.find('#checkbox-to-journal-div').removeClass('no-display');
+
         dialog.modal('show');
 
         //Добавляем/убираем описание серии событий при клике по checkbox "Повторяющееся событие"
@@ -310,6 +391,7 @@ function painting() {
                 timeStart: dialog.find('#timeStart').val(),
                 timeEnd: dialog.find('#timeEnd').val(),
                 comment: dialog.find('#description').val()
+                //TODO Добавить сохранение journal, если выбран checkbox
             };
             saveEvent(JSON.stringify(new_event));
 

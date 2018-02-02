@@ -13,14 +13,14 @@ function show_schedule() {
     painting();
 
     //Обработчики для кнопок "Следующая неделя" и "Предыдущая неделя"
-    $('#prev').on('click', function() {
+    $('#prev_schedule').on('click', function() {
         monday = new Date(monday.getTime() - 7 * 24 * 60 * 60 * 1000);
         sunday = new Date(sunday.getTime() - 7 * 24 * 60 * 60 * 1000);
         $('div').remove('.event');
         draw_dates();
         draw_events();
     });
-    $('#next').on('click', function() {
+    $('#next_schedule').on('click', function() {
         monday = new Date(monday.getTime() + 7 * 24 * 60 * 60 * 1000);
         sunday = new Date(sunday.getTime() + 7 * 24 * 60 * 60 * 1000);
         $('div').remove('.event');
@@ -137,9 +137,9 @@ function draw_event(col, row, i, n, id, currentDate) {
         containment: 'parent',
         distance: 10,
         snap: 'td'
-    }).on('click', show_detail_event)
+    }).off('click').on('click', show_detail_event)
         //Оно точно надо?
-        .on('mouseup', clear_td_color);
+        .off('nouseup').on('mouseup', clear_td_color);
 
     $("#schedule-table").append(div);
 
@@ -168,6 +168,63 @@ function show_detail_event() {
 
         dialog.find('#for-serial-group').addClass('no-display');
         dialog.find('#repeat').removeClass('no-display');
+        dialog.find('#repeat').removeAttr('style');
+
+        dialog.find('#lesson').removeAttr('style');
+        dialog.find('#for-lesson-group').removeClass('no-display');
+        if (event.lesson === null) {
+            dialog.find('#with-lesson')
+                .prop('checked', false)
+                .removeAttr('disabled');
+            dialog.find('#lesson')
+                .addClass('no-display');
+            //TODO select! Тоже нужны, если хотим сделать событие занятием
+
+            dialog.find('#add-to-journal-div').addClass('no-display');
+            dialog.find('#checkbox-to-journal-div').removeClass('no-display');
+        } else {
+            dialog.find('#with-lesson')
+                .prop('checked', true)
+                .prop('disabled', true);
+            dialog.find('#lesson')
+                .removeAttr('style')
+                .removeClass('no-display');
+            dialog.find('#subject-div').removeClass('no-display');
+            dialog.find('#subject-select-div').addClass('no-display');
+            dialog.find('#subject').text(event.lesson.subjectName);
+            dialog.find('#student-div').removeClass('no-display');
+            dialog.find('#student-select-div').addClass('no-display');
+            dialog.find('#student').text(event.lesson.student.firstName + " " + event.lesson.student.lastName);
+            dialog.find('#price').val(event.lesson.price);
+
+            dialog.find('#add-to-journal-div').removeClass('no-display');
+            dialog.find('#checkbox-to-journal-div').addClass('no-display');
+
+            idLesson = event.lesson.id;
+            date = _this.data('currentDate');
+            check_journal_exists(idLesson, date);
+
+            $('#add_to_journal_btn').off('click').on('click', function() {
+                //TODO подсказка что создано ?
+                $(this).prop('disabled', true);
+                var journal = {
+                    lesson: {
+                        id: idLesson
+                    },
+                    date: date
+                };
+                saveJournal(JSON.stringify(journal));
+            });
+        }
+
+        //Добавляем описание занятия при клике по checkbox "Занятие"
+        $('#with-lesson').on('change', function() {
+            if ($(this).prop('checked')) {
+                $('#lesson').fadeIn().show();
+            } else {
+                $('#lesson').fadeOut(300);
+            }
+        });
 
         dialog.find('#repeat_code_group').addClass('no-display');
         dialog.find('#status_group').removeClass('no-display');
@@ -215,6 +272,42 @@ function show_detail_event() {
     });
 }
 
+
+//Функция проверки, что запись в журнале уже есть
+function check_journal_exists(idLesson, date) {
+    $.ajax({
+        type: "GET",
+        datatype: "json",
+        url: "http://localhost:8080/rest/journal/idLesson/" + idLesson + "?date=" + date,
+        headers: {
+            'idTutor': getCookie("idTutor")
+        }
+    }).then(function (journal, statusText, xhr) {
+        if (journal !== null) {
+            $('#add_to_journal_btn').removeAttr('disabled');
+        } else if (xhr.status === 204) {
+            $('#add_to_journal_btn').prop('disabled', true);
+        }
+    });
+}
+
+//Функция создания записи календаря для занятия
+function saveJournal(journal) {
+    $.ajax({
+        type: "POST",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        processData: false,
+        url: "http://localhost:8080/rest/journal",
+        headers: {
+            'idTutor': getCookie("idTutor")
+        },
+        data: journal
+    }).then(function (data) {
+        //TODO ??
+    })
+}
+
 //Стираем выделение цветом всех td
 function clear_td_color() {
     $('td').each(function() {
@@ -257,8 +350,18 @@ function painting() {
         dialog.find('#timeStart').val(rowToTimeTop(row));
         dialog.find('#timeEnd').val(rowToTimeBot(row2));
 
+        //Скрываем блок repeat (по умолчанию событие не повторяющееся)
         dialog.find('#for-serial-group').removeClass('no-display');
+        dialog.find('#with-serial').prop('checked', false);
         dialog.find('#repeat').addClass('no-display');
+        dialog.find('#repeat').removeAttr('style');
+
+        //Скрываем блок lesson (по умолчанию событие не является занятием)
+        dialog.find('#for-lesson-group').removeClass('no-display');
+        dialog.find('#with-lesson').prop('checked', false);
+        dialog.find('#with-lesson').removeAttr('disabled');
+        dialog.find('#lesson').addClass('no-display');
+        dialog.find('#lesson').removeAttr('style');
 
         dialog.find('#dateStart').val(currentDate);
         dialog.find('#date_end').removeClass('no-display');
@@ -269,6 +372,18 @@ function painting() {
 
         dialog.find('#serial-group').addClass('no-display');
 
+        dialog.find('#subject-div').addClass('no-display');
+        dialog.find('#subject-select-div').removeClass('no-display');
+        dialog.find('#subject').text("");
+        //TODO select x2 штука
+        dialog.find('#student-div').addClass('no-display');
+        dialog.find('#student-select-div').removeClass('no-display');
+        dialog.find('#student').text("");
+        dialog.find('#price').val("");
+
+        dialog.find('#add-to-journal-div').addClass('no-display');
+        dialog.find('#checkbox-to-journal-div').removeClass('no-display');
+
         dialog.modal('show');
 
         //Добавляем/убираем описание серии событий при клике по checkbox "Повторяющееся событие"
@@ -277,6 +392,15 @@ function painting() {
                 $('#repeat').fadeIn().show();
             } else {
                 $('#repeat').fadeOut(300);
+            }
+        });
+
+        //Добавляем описание занятия при клике по checkbox "Занятие"
+        $('#with-lesson').on('change', function() {
+            if ($(this).prop('checked')) {
+                $('#lesson').fadeIn().show();
+            } else {
+                $('#lesson').fadeOut(300);
             }
         });
 
@@ -291,6 +415,7 @@ function painting() {
                 timeStart: dialog.find('#timeStart').val(),
                 timeEnd: dialog.find('#timeEnd').val(),
                 comment: dialog.find('#description').val()
+                //TODO Добавить сохранение journal, если выбран checkbox
             };
             saveEvent(JSON.stringify(new_event));
 

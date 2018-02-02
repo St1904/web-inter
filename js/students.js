@@ -119,6 +119,7 @@ function buttons() {
         dialog.find('#firstName').val(studentCard.data('firstName'));
         dialog.find('#lastName').val(studentCard.data('lastName'));
         dialog.find('#address').val(studentCard.data('address'));
+        dialog.find('.modal-title').text('Студент');
         $(studentCard.data('contacts'))
             .each(function (i, elem) {
                 if (i > 0) {
@@ -180,7 +181,6 @@ function add_autocomplete() {
             tips.push(this.name);
         });
     });
-    console.log(tips);
 
     $('.contact-name-inputs')
         .autocomplete({
@@ -278,4 +278,5 @@ function clear_modal() {
     dialog.find('.contact').not(':first').remove();
     dialog.find('#contact_name').val('');
     dialog.find('#contact_value').val('');
+    dialog.find('.modal-title').text('Новый студент');
 }

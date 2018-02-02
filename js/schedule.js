@@ -13,14 +13,14 @@ function show_schedule() {
     painting();
 
     //Обработчики для кнопок "Следующая неделя" и "Предыдущая неделя"
-    $('#prev').on('click', function() {
+    $('#prev_schedule').on('click', function() {
         monday = new Date(monday.getTime() - 7 * 24 * 60 * 60 * 1000);
         sunday = new Date(sunday.getTime() - 7 * 24 * 60 * 60 * 1000);
         $('div').remove('.event');
         draw_dates();
         draw_events();
     });
-    $('#next').on('click', function() {
+    $('#next_schedule').on('click', function() {
         monday = new Date(monday.getTime() + 7 * 24 * 60 * 60 * 1000);
         sunday = new Date(sunday.getTime() + 7 * 24 * 60 * 60 * 1000);
         $('div').remove('.event');
@@ -137,9 +137,9 @@ function draw_event(col, row, i, n, id, currentDate) {
         containment: 'parent',
         distance: 10,
         snap: 'td'
-    }).on('click', show_detail_event)
+    }).off('click').on('click', show_detail_event)
         //Оно точно надо?
-        .on('mouseup', clear_td_color);
+        .off('nouseup').on('mouseup', clear_td_color);
 
     $("#schedule-table").append(div);
 
@@ -205,8 +205,15 @@ function show_detail_event() {
             check_journal_exists(idLesson, date);
 
             $('#add_to_journal_btn').off('click').on('click', function() {
-                //TODO
+                //TODO подсказка что создано ?
                 $(this).prop('disabled', true);
+                var journal = {
+                    lesson: {
+                        id: idLesson
+                    },
+                    date: date
+                };
+                saveJournal(JSON.stringify(journal));
             });
         }
 
@@ -271,7 +278,7 @@ function check_journal_exists(idLesson, date) {
     $.ajax({
         type: "GET",
         datatype: "json",
-        url: "http://localhost:8080/rest/journal?idLesson=" + idLesson + "&date=" + date,
+        url: "http://localhost:8080/rest/journal/idLesson/" + idLesson + "?date=" + date,
         headers: {
             'idTutor': getCookie("idTutor")
         }
@@ -282,6 +289,23 @@ function check_journal_exists(idLesson, date) {
             $('#add_to_journal_btn').prop('disabled', true);
         }
     });
+}
+
+//Функция создания записи календаря для занятия
+function saveJournal(journal) {
+    $.ajax({
+        type: "POST",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        processData: false,
+        url: "http://localhost:8080/rest/journal",
+        headers: {
+            'idTutor': getCookie("idTutor")
+        },
+        data: journal
+    }).then(function (data) {
+        //TODO ??
+    })
 }
 
 //Стираем выделение цветом всех td

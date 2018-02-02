@@ -32,6 +32,7 @@ $(document).ready(function () {
                     break;
                 case "menu-journal":
                     show(journal);
+                    show_journal();
                     break;
                 case "menu-students":
                     show(students);

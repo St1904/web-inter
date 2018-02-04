@@ -66,6 +66,7 @@ function draw_tree(tree) {
                 "  <div class=\"panel-body\">" +
                 "    <i class=\"glyphicon " + glyph + "\" aria-hidden=\"true\"></i>" +
                 "    <span>" + this.name + "</span>" +
+                "    <button id='del_btn_li_" + this.id + "' class='btn btn-danger pull-right del_theme_btn'>Удалить</button>" +
                 "</div>" +
                 "</div>" +
                 "</li>");
@@ -82,11 +83,28 @@ function draw_tree(tree) {
 
         place.append(ul_node);
 
-
         //Рисуем всех "детей"
         $.each(tree, function() {
             draw_tree(this.children)
-        })
+        });
+
+        //Обработчик события для кнопки "Удалить" на строке с темой занятия
+        $('.del_theme_btn').off('click').on('click', function() {
+            // console.log(this.id.substr(11));
+            var idTheme = this.id.substr(11);
+            $.ajax({
+                type: "DELETE",
+                datatype: "json",
+                contentType: "application/json; charset=utf-8",
+                processData: false,
+                url: "http://localhost:8080/rest/theme/" + idTheme,
+                headers: {
+                    'idTutor': getCookie("idTutor")
+                }
+            }).then(function(data) {
+                $('#li_' + idTheme).remove();
+            });
+        });
     }
 }
 

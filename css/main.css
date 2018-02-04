@@ -112,7 +112,21 @@ hr {
     background: #bfe9e6;
 }*/
 
+/*Убираем значки в списках*/
+li {
+    list-style-type: none;
+}
 
+/*Убираем отступы между панелями в списке тем*/
+.theme-item {
+    margin-bottom: 0px;
+}
+
+/*Убираем отступ у первого списка ul*/
+.first-theme-ul {
+    margin-left: 0; /* Отступ слева в браузере IE и Opera */
+    padding-left: 0; /* Отступ слева в браузере Firefox, Safari, Chrome */
+}
 
 /*Магия, чтобы работал автокомплит*/
 .ui-autocomplete {

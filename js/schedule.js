@@ -448,7 +448,7 @@ function paint_by_coord(td1, x, y) {
     })
 }
 
-//Функция, преобразующая номер ряда в время формата 18:59 (по верхней границе div
+//Функция, преобразующая номер ряда в время формата 18:59 (по верхней границе div)
 function rowToTimeTop(row) {
     var hour = Math.floor((row - 1) / 2);
     var minute = ((row + 1) / 2 % 1) * 60;

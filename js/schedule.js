@@ -82,7 +82,7 @@ function getRowNum(start, end) {
 
 //Только для текущей таблицы работает (функции соответствуют таблице на 7 дней)
 function draw_events() {
-    var query = 'http://localhost:8080/rest/eventchange/?from=' +
+    var query = 'http://localhost:8080/rest/event/?from=' +
         formatDate(monday) +
         '&to=' +
         formatDate(sunday);

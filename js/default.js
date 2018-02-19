@@ -46,7 +46,7 @@ $(document).ready(function () {
         $('#logout').on('click', function () {
             document.cookie = "idTutor=; path=/; date=" + new Date(0).toUTCString();
             disableAllExceptMain();
-            window.location.href = "main.html";
+            window.location.href = "../index.html";
             // show(home);
         });
     } else {
@@ -84,9 +84,9 @@ function hasCookie() {
 /*
 var current = getCookie("idTutor");
 if (current === null || current === "") {
-    if (window.location.pathname !== "/web-inter/html/main.html") {
+    if (window.location.pathname !== "/web-inter/html/index.html") {
         // disableAllExceptMain();
-        // window.location.href = "main.html";
+        // window.location.href = "index.html";
         show(home);
     }
     disableAllExceptMain();

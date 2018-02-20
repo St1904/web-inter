@@ -1,21 +1,8 @@
-/*
- var current = getCookie('idTutor');
-
- if (current === null || current === "") {
- if (window.location.pathname !== "/web-inter/html/main.html") {
- disableAll();
- window.location.href = "main.html";
- }
- }
- */
-
 $(document).ready(function () {
     show(home);
     if (hasCookie()) {
         $('#sayhi').append(current);
-        // show(home);
         $(".nav li").on("click", function () {
-            // checkCookie();
             $(".nav").find(".active").removeClass("active");
             $(this).addClass("active");
             switch ($(this).attr("id")) {
@@ -46,8 +33,7 @@ $(document).ready(function () {
         $('#logout').on('click', function () {
             document.cookie = "idTutor=; path=/; date=" + new Date(0).toUTCString();
             disableAllExceptMain();
-            window.location.href = "../index.html";
-            // show(home);
+            window.location.href = "../html/main.html";
         });
     } else {
         disableAllExceptMain();
@@ -73,21 +59,9 @@ function disableAllExceptMain() {
     $(".nav").find(".active").removeClass("active");
     menu_home.addClass("active");
     nav_li.off("click");
-    // show(home);
 }
 
 function hasCookie() {
     current = getCookie("idTutor");
     return current !== null && current !== "";
 }
-
-/*
-var current = getCookie("idTutor");
-if (current === null || current === "") {
-    if (window.location.pathname !== "/web-inter/html/index.html") {
-        // disableAllExceptMain();
-        // window.location.href = "index.html";
-        show(home);
-    }
-    disableAllExceptMain();
-}*/

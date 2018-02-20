@@ -126,12 +126,13 @@ function draw_event(col, row, i, n, id, currentDate) {
         }
     }).css({
         'position': 'absolute',
-        'background-color': 'red',
+        'background-color': '#F1B6EA',
         'top': tr.prop('offsetTop') + tr.closest('table').prop('offsetTop') + td.prop('offsetHeight') * (row % 1),
         'left': td.prop('offsetLeft') + td.closest('table').prop('offsetLeft'),
         'width': td.prop('offsetWidth'),
         'height': td.prop('offsetHeight') * n,
-        'border': '2px solid black'
+        'border': '1px dashed black',
+        'border-radius': '5px'
     }).draggable({
         axis: 'y',
         containment: 'parent',

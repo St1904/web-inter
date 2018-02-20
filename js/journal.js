@@ -31,7 +31,7 @@ function getJournals(limit, offset) {
             $.ajax({
                 type: "GET",
                 datatype: "json",
-                url: "http://localhost:8080/rest/theme/subject/" + $this.data('idSubject'),
+                url: "http://localhost:8080/rest/subject/" + $this.data('idSubject') + "/theme",
                 headers: {
                     'idTutor': getCookie("idTutor")
                 }

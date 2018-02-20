@@ -31,8 +31,8 @@ function draw_tree(tree) {
                 "  <div class=\"panel-body\">" +
                 "      <i class=\"glyphicon " + glyph + "\" aria-hidden=\"true\"></i>" +
                 "      <span>" + this.name + "</span>" +
-                "      <button id='del_btn_li_" + this.id + "' class='btn btn-danger pull-right del_theme_btn'>Удалить</button>" +
-                "      <button id='create_btn_li_" + this.id + "' class='btn btn-success pull-right create_theme_btn'>Создать</button>" +
+                "      <button id='del_btn_li_" + this.id + "' class='btn btn-danger pull-right del_theme_btn'><i class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></i>Удалить</button>" +
+                "      <button id='create_btn_li_" + this.id + "' class='btn btn-success pull-right create_theme_btn'><i class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\"></i>Создать</button>" +
                 "</div>" +
                 "</div>" +
                 "</li>");
@@ -92,8 +92,8 @@ function draw_tree(tree) {
                 "          </div>\n" +
                 "       </div>\n" +
                 "    </form>" +
-                "    <button class='btn btn-danger pull-right delete_theme_form'>Удалить</button>" +
-                "    <button class='btn btn-primary pull-right save_theme_form'>Сохранить</button>" +
+                "    <button class='btn btn-danger pull-right delete_theme_form'><i class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></i>Удалить</button>" +
+                "    <button class='btn btn-primary pull-right save_theme_form'><i class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></i>Сохранить</button>" +
                 "</div>" +
                 "</div>" +
                 "</li>");
@@ -142,8 +142,8 @@ function draw_tree(tree) {
                         "  <div class=\"panel-body\">" +
                         "      <i class=\"glyphicon glyphicon-tag\" aria-hidden=\"true\"></i>" +
                         "      <span>" + theme.name + "</span>" +
-                        "      <button id='del_btn_li_" + theme.id + "' class='btn btn-danger pull-right del_theme_btn'>Удалить</button>" +
-                        "      <button id='create_btn_li_" + theme.id + "' class='btn btn-success pull-right create_theme_btn'>Создать</button>" +
+                        "      <button id='del_btn_li_" + theme.id + "' class='btn btn-danger pull-right del_theme_btn'><i class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></i>Удалить</button>" +
+                        "      <button id='create_btn_li_" + theme.id + "' class='btn btn-success pull-right create_theme_btn'><i class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\"></i>Создать</button>" +
                         "</div>" +
                         "</div>" +
                         "</li>");
@@ -179,7 +179,7 @@ function set_handlers() {
             datatype: "json",
             contentType: "application/json; charset=utf-8",
             processData: false,
-            url: "http://localhost:8080/rest/theme/subject",
+            url: "http://localhost:8080/rest/subject",
             headers: {
                 'idTutor': getCookie("idTutor")
             },

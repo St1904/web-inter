@@ -1,6 +1,10 @@
 body {
     padding-top: 70px;
-    background: url("../images/backgr.png") repeat;
+    background: url("../images/bgr2.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 /*
 div, .panel {
@@ -34,7 +38,7 @@ div, .panel {
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
     color: #000000;
-    background-color: #3fe750;
+    background-color: #74c874;
     border: 1px solid rgb(132, 231, 157);
     border-radius: 10px;
 }
@@ -44,7 +48,7 @@ div, .panel {
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
     color: #000000;
-    background-color: #3fe750;
+    background-color: #74c874;
     border: 1px solid rgb(132, 231, 157);
     border-radius: 10px;
 }

@@ -4,7 +4,7 @@ $(document).ready(function () {
     $("#button-enter").on("click", function (e) {
         e.preventDefault();
         setCookie('idTutor', $('#id_tutor').val(), {path: '/'});
-        window.location.href = "../index.html";
+        window.location.href = "../html/main.html";
         // show(home);
     })
 });
